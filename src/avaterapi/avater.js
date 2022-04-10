@@ -15,12 +15,12 @@ import {
 import React, { useState } from "react";
 import Nav from "./component/Nav";
 import { spacing, width } from "@mui/system";
-function avater() {
+function Avatar() {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpen(!open);
   };
-
   return (
     <>
       <Nav />
@@ -35,32 +35,41 @@ function avater() {
             label="Enter Your Name"
             color="secondary"
             fullWidth
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
           <Button
             variant="contained"
             sx={{ display: "flex", alignSelf: "center", width: 300 }}
             color="secondary"
+            onClick={() => {
+              if (name != "") {
+                handleClickOpen();
+              } else {
+              }
+            }}
           >
             Find Avatar
           </Button>
         </Stack>
       </Box>
-      <Button variant="outlined" onClick={()=>{handleClickOpen()}}>
-        Open simple dialog
-      </Button>
       <Dialog open={open}>
-        <DialogTitle>Set backup account</DialogTitle>
-        <List sx={{ pt: 0 }}></List>
+        <Stack direction="row">
+          <DialogTitle sx={{ marginRight: "100px" }}>Your Avater</DialogTitle>
+          <Button
+            onClick={() => {
+              handleClickOpen();
+            }}
+          >
+            x
+          </Button>
+        </Stack>
+        <List sx={{ pt: 0 }}><img src={`https://joeschmoe.io/api/v1/${name}`} width="316" height="341"/></List>
       </Dialog>
-      {/* <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined">
-          <CardContent>
-            <Typography>Name</Typography>
-          </CardContent>
-        </Card>
-      </Box> */}
     </>
   );
 }
 
-export default avater;
+export default Avatar;
